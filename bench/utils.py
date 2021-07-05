@@ -171,12 +171,12 @@ def which(executable, raise_err = False):
 
 	return exec_
 
-def setup_env(bench_path='.', python = 'python3'):
+def setup_env(bench_path='.', python = 'python2.7'):
 	python = which(python, raise_err = True)
 	pip    = os.path.join('env', 'bin', 'pip')
 
 	exec_cmd('virtualenv -q {} -p {}'.format('env', python), cwd=bench_path)
-	exec_cmd('{} -q install --upgrade pip'.format(pip), cwd=bench_path)
+	exec_cmd('{} -q install --force-reinstall pip==9.0.3'.format(pip), cwd=bench_path)
 	exec_cmd('{} -q install wheel'.format(pip), cwd=bench_path)
 	exec_cmd('{} -q install six'.format(pip), cwd=bench_path)
 	exec_cmd('{} -q install -e git+https://github.com/frappe/python-pdfkit.git#egg=pdfkit'.format(pip), cwd=bench_path)
@@ -202,9 +202,9 @@ def build_assets(bench_path='.', app=None):
 	if bench.FRAPPE_VERSION == 4:
 		exec_cmd("{frappe} --build".format(frappe=get_frappe(bench_path=bench_path)), cwd=os.path.join(bench_path, 'sites'))
 	else:
-		#command = 'bench build'
-		#if app:
-			#command += ' --app {}'.format(app)
+		command = 'bench build'
+		if app:
+			command += ' --app {}'.format(app)
 		exec_cmd(command, cwd=bench_path)
 
 def get_sites(bench_path='.'):
