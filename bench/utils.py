@@ -203,8 +203,8 @@ def build_assets(bench_path='.', app=None):
 		exec_cmd("{frappe} --build".format(frappe=get_frappe(bench_path=bench_path)), cwd=os.path.join(bench_path, 'sites'))
 	else:
 		command = 'bench build'
-		if app:
-			command += ' --app {}'.format(app)
+		#if app:
+		#	command += ' --app {}'.format(app)
 		exec_cmd(command, cwd=bench_path)
 
 def get_sites(bench_path='.'):
